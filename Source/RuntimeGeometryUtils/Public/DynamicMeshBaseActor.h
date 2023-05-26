@@ -29,7 +29,8 @@ UENUM()
 enum class EDynamicMeshActorSourceType : uint8
 {
 	Primitive,
-	ImportedMesh
+	ImportedMesh,
+	FromStaticMesh
 };
 
 
@@ -172,6 +173,11 @@ public:
 	UPROPERTY(EditAnywhere, Category = PrimitiveOptions, meta = (UIMin = 0, EditCondition = "SourceType == EDynamicMeshActorSourceType::Primitive", EditConditionHides))
 	float PulseSpeed = 3.0;
 
+	//
+	// Parameters for SourceType = FromStaticMesh
+	//
+	UPROPERTY(EditAnywhere, Category = PrimitiveOptions, meta = (UIMin = 0, EditCondition = "SourceType == EDynamicMeshActorSourceType::FromStaticMesh", EditConditionHides))
+	UStaticMesh* RefStaticMesh;
 
 
 	//

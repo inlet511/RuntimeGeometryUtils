@@ -167,6 +167,16 @@ void ADynamicMeshBaseActor::RegenerateSourceMesh(FDynamicMesh3& MeshOut)
 			MeshTransforms::Scale(MeshOut, ImportScale*FVector3d::One(), FVector3d::Zero());
 		}
 	}
+	else if (SourceType == EDynamicMeshActorSourceType::FromStaticMesh)
+	{
+		MeshOut = FDynamicMesh3();
+		if (RefStaticMesh != nullptr)
+		{
+			FMeshDescription* MeshDescription = RefStaticMesh->GetMeshDescription(0);
+
+		}
+
+	}
 
 	RecomputeNormals(MeshOut);
 }
