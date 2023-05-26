@@ -12,6 +12,7 @@
 #include "Implicit/Morphology.h"
 
 #include "DynamicMeshOBJReader.h"
+#include "MeshDescriptionToDynamicMesh.h"
 
 // Sets default values
 ADynamicMeshBaseActor::ADynamicMeshBaseActor()
@@ -173,9 +174,9 @@ void ADynamicMeshBaseActor::RegenerateSourceMesh(FDynamicMesh3& MeshOut)
 		if (RefStaticMesh != nullptr)
 		{
 			FMeshDescription* MeshDescription = RefStaticMesh->GetMeshDescription(0);
-
+			FMeshDescriptionToDynamicMesh Converter;
+			Converter.Convert(MeshDescription, MeshOut, true);
 		}
-
 	}
 
 	RecomputeNormals(MeshOut);
