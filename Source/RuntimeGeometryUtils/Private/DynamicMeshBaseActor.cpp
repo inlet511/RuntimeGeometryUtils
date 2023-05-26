@@ -9,6 +9,7 @@
 #include "MeshSimplification.h"
 #include "Operations/MeshBoolean.h"
 #include "Implicit/Solidify.h"
+#include "Implicit/Morphology.h"
 
 #include "DynamicMeshOBJReader.h"
 
@@ -393,7 +394,29 @@ void ADynamicMeshBaseActor::CopyFromMesh(ADynamicMeshBaseActor* OtherMesh, bool 
 }
 
 
+void ADynamicMeshBaseActor::DilateMesh(float distance, float gridCellSize, float meshCellSize)
+{
+	TImplicitMorphology<FDynamicMesh3> Mopher;
+	FDynamicMesh3 SimplifyMesh;
+	SimplifyMesh.CompactCopy(SourceMesh, false, false, false, false);
+	FDynamicMeshAABBTree3 AABBTree(&SimplifyMesh, true);
 
+	Mopher.Source = &SimplifyMesh;
+	Mopher.SourceSpatial = &AABBTree;
+	Mopher.MorphologyOp = TImplicitMorphology<FDynamicMesh3>::EMorphologyOp::Dilate;
+	Mopher.Distance = distance;
+	Mopher.GridCellSize = gridCellSize;
+	Mopher.MeshCellSize = meshCellSize;
+
+	FDynamicMesh3 NewMesh(&Mopher.Generate());
+	NewMesh.EnableAttributes();
+	RecomputeNormals(NewMesh);
+
+	EditMesh([&](FDynamicMesh3& MeshToUpdate) {
+
+		MeshToUpdate = MoveTemp(NewMesh);
+		});
+}
 
 void ADynamicMeshBaseActor::SolidifyMesh(int VoxelResolution, float WindingThreshold)
 {

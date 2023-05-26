@@ -360,6 +360,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void IntersectWithMesh(ADynamicMeshBaseActor* OtherMesh);
 
+	UFUNCTION(BlueprintCallable)
+	void DilateMesh(float distance = 10.0f, float gridCellSize = 1.0f, float meshCellSize = 1.0f);
+
 	/** Create a "solid" verison of SourceMesh by voxelizing with the fast winding number at the given grid resolution */
 	UFUNCTION(BlueprintCallable)
 	void SolidifyMesh(int VoxelResolution = 64, float WindingThreshold = 0.5);
