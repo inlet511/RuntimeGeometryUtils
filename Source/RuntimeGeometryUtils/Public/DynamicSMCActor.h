@@ -21,7 +21,10 @@ public:
 	UStaticMeshComponent* MeshComponent = nullptr;
 
 	UPROPERTY(Transient)
-	UStaticMesh* StaticMesh = nullptr;
+	UStaticMesh* MyStaticMesh = nullptr;
+
+	UFUNCTION(BlueprintCallable)
+	UStaticMesh* GetMyStaticMesh();
 
 protected:
 	// Called when the game starts or when spawned

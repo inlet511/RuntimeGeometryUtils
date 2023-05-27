@@ -6,25 +6,30 @@ ADynamicSMCActor::ADynamicSMCActor()
 {
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"), false);
 	SetRootComponent(MeshComponent);
-	StaticMesh = nullptr;
+	MyStaticMesh = nullptr;
+}
+
+UStaticMesh* ADynamicSMCActor::GetMyStaticMesh()
+{
+	return MyStaticMesh;
 }
 
 // Called when the game starts or when spawned
 void ADynamicSMCActor::BeginPlay()
 {
-	StaticMesh = nullptr;
+	MyStaticMesh = nullptr;
 	Super::BeginPlay();
 }
 
 void ADynamicSMCActor::PostLoad()
 {
-	StaticMesh = nullptr;
+	MyStaticMesh = nullptr;
 	Super::PostLoad();
 }
 
 void ADynamicSMCActor::PostActorCreated()
 {
-	StaticMesh = nullptr;
+	MyStaticMesh = nullptr;
 	Super::PostActorCreated();
 }
 
@@ -43,17 +48,17 @@ void ADynamicSMCActor::OnMeshEditedInternal()
 
 void ADynamicSMCActor::UpdateSMCMesh()
 {
-	if (StaticMesh == nullptr)
+	if (MyStaticMesh == nullptr)
 	{
-		StaticMesh = NewObject<UStaticMesh>();
-		MeshComponent->SetStaticMesh(StaticMesh);
+		MyStaticMesh = NewObject<UStaticMesh>();
+		MeshComponent->SetStaticMesh(MyStaticMesh);
 		// add one material slot
-		StaticMesh->GetStaticMaterials().Add(FStaticMaterial());
+		MyStaticMesh->GetStaticMaterials().Add(FStaticMaterial());
 	}
 
 	if (MeshComponent)
 	{
-		RTGUtils::UpdateStaticMeshFromDynamicMesh(StaticMesh, &SourceMesh);
+		RTGUtils::UpdateStaticMeshFromDynamicMesh(MyStaticMesh, &SourceMesh);
 
 		// update material on new section
 		UMaterialInterface* UseMaterial = (this->Material != nullptr) ? this->Material : UMaterial::GetDefaultMaterial(MD_Surface);
