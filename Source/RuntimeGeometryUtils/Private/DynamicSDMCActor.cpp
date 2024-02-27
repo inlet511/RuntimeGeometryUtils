@@ -1,5 +1,6 @@
 #include "DynamicSDMCActor.h"
 #include "DynamicMesh/DynamicMesh3.h"
+#include "MaterialDomain.h"
 
 
 // Sets default values
