@@ -1,6 +1,7 @@
 #include "DynamicPMCActor.h"
 #include "MeshComponentRuntimeUtils.h"
 #include "DynamicMesh/DynamicMesh3.h"
+#include "MaterialDomain.h"
 
 
 // Sets default values

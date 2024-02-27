@@ -1,5 +1,6 @@
 #include "DynamicSMCActor.h"
 #include "MeshComponentRuntimeUtils.h"
+#include "MaterialDomain.h"
 
 // Sets default values
 ADynamicSMCActor::ADynamicSMCActor()
